@@ -1,6 +1,6 @@
-# nuxtuto
+# nuxtdashboard
 
-> My primo Nuxt.js project
+> Dashboard Web App using nuxt. live demo [https://dashnuxtv1.netlify.com](https://dashnuxtv1.netlify.com/)
 
 ## Build Setup
 
