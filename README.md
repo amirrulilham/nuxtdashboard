@@ -1,6 +1,8 @@
 # nuxtdashboard
 
 > Dashboard Web App using nuxt. live demo [https://dashnuxtv1.netlify.com](https://dashnuxtv1.netlify.com/)
+- [vuetify](https://vuetifyjs.com/en/)
+- [apexchart](https://apexcharts.com/)
 
 ## Build Setup
 
