@@ -53,7 +53,9 @@ export default {
       allowLocalhostAsSecureOrigin: true,
       welcomeNotification: {
         disable: true
-      }
+      },
+      cdn: true,
+      OneSignalSDK: 'https://cdn.onesignal.com/sdks/OneSignalSDKWorker.js'
     }
   },
   /*
@@ -88,10 +90,6 @@ export default {
     /*
      ** You can extend webpack config here
      */
-    vendor: [
-      "~/assets/OneSignalSDKWorker.js"
-    ],
-
     extend(config, ctx) {}
   }
 };
