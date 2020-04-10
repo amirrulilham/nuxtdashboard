@@ -52,7 +52,7 @@ export default {
       appId: "a1667a97-2d95-4951-a2c1-01bfe9341ce9",
       allowLocalhostAsSecureOrigin: true,
       welcomeNotification: {
-        disable: true
+        disable: false
       },
       cdn: true,
       OneSignalSDK: 'https://cdn.onesignal.com/sdks/OneSignalSDKWorker.js'
