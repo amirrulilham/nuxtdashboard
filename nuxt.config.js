@@ -62,7 +62,7 @@ export default {
     }
   },
   /*
-   ** Axios module configuration
+   ** Axios module configuration  
    ** See https://axios.nuxtjs.org/options
    */
   axios: {},
