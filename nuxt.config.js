@@ -18,9 +18,6 @@ export default {
       }
     ],
     link: [{ rel: "icon", type: "image/x-icon", href: "/favicon.ico" }],
-    script: [
-      {hid: 'onesignal', src: 'https://cdn.onesignal.com/sdks/OneSignalSDKWorker.js'}
-    ]
   },
   /*
    ** Customize the progress-bar color
@@ -91,6 +88,10 @@ export default {
     /*
      ** You can extend webpack config here
      */
+    vendor: [
+      "~/assets/OneSignalWorker.js"
+    ],
+
     extend(config, ctx) {}
   }
 };
