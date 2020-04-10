@@ -2,6 +2,9 @@ import colors from "vuetify/es5/util/colors";
 
 export default {
   mode: "spa",
+  generate: {
+    fallback: true
+  },
   /*
    ** Headers of the page
    */
@@ -54,8 +57,8 @@ export default {
       welcomeNotification: {
         disable: false
       },
-      cdn: true,
-      OneSignalSDK: 'https://cdn.onesignal.com/sdks/OneSignalSDKWorker.js'
+      // cdn: true,
+      // OneSignalSDK: 'https://cdn.onesignal.com/sdks/OneSignalSDKWorker.js'
     }
   },
   /*
