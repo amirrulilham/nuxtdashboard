@@ -89,7 +89,7 @@ export default {
      ** You can extend webpack config here
      */
     vendor: [
-      "~/assets/OneSignalWorker.js"
+      "~/assets/OneSignalSDKWorker.js"
     ],
 
     extend(config, ctx) {}
