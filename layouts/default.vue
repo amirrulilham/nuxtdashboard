@@ -3,11 +3,7 @@
     <v-navigation-drawer v-model="drawer" fixed app>
       <!-- <v-container> -->
       <div>
-        <v-img
-          src="425-510x300.jpg"
-          aspect-ratio="1.7"
-          contain
-        ></v-img>
+        <v-img src="425-510x300.jpg" aspect-ratio="1.7" contain></v-img>
       </div>
       <v-list flat>
         <template v-for="list in lists">
@@ -44,7 +40,14 @@
       <!-- </v-container> -->
     </v-navigation-drawer>
 
-    <v-app-bar color="primary" class="mx-4 mt-3" style="border-radius: 8px;" dark dense app>
+    <v-app-bar
+      color="primary"
+      class="mx-4 mt-3"
+      style="border-radius: 8px;"
+      dark
+      dense
+      app
+    >
       <v-app-bar-nav-icon @click.stop="drawer = !drawer" class="d-lg-none" />
       <v-toolbar-title>Nuxt Tuto</v-toolbar-title>
       <v-spacer />
@@ -77,7 +80,7 @@
                 <v-list-item
                   v-for="(item, index) in toolmenus"
                   :key="index"
-                  @click=""
+                  @click.stop=""
                 >
                   <v-list-item-title
                     class="d-flex align-center justify-space-around"
@@ -111,6 +114,18 @@
 
     <v-content class="mt-3">
       <v-container>
+        <v-container>
+          <Alert
+            :alertShow="alert.show"
+            :dismissible="alert.dismissible"
+            :color="alert.color"
+            :elevation="alert.elevation"
+            :border="alert.border"
+            :coloredBorder="alert.coloredBorder"
+            :icon="alert.icon"
+            :alertText="alert.alertText"
+          />
+        </v-container>
         <nuxt />
       </v-container>
     </v-content>
@@ -118,7 +133,12 @@
 </template>
 
 <script>
+import Alert from "../components/alert";
+import { mapGetters } from "vuex";
 export default {
+  components: {
+    Alert
+  },
   data() {
     return {
       drawer: true,
@@ -170,13 +190,31 @@ export default {
             }
           ]
         }
-      ]
+      ],
+      // alert: {
+      //   show: true,
+      //   dismissible: true,
+      //   color: "cyan",
+      //   border: "left",
+      //   elevation: 2,
+      //   coloredBorder: true,
+      //   icon: "mdi-alert-circle",
+      //   alertText: "You've got <strong>5</strong> new updates on your timeline!"
+      // }
     };
+  },
+  computed: {
+    ...mapGetters({
+      alert: 'alert/getAlert'
+    })
   },
   methods: {
     logout() {
       alert("user logged out");
     }
+  }, 
+  created(){
+    // this.$store.commit('alert/showAlert', `You've got <strong>5</strong> new updates on your timeline!`)
   }
 };
 </script>

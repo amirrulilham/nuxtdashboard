@@ -44,8 +44,21 @@ export default {
   modules: [
     // Doc: https://axios.nuxtjs.org/usage
     '@nuxtjs/axios',
+    '@nuxtjs/onesignal',
     '@nuxtjs/pwa',
+    '@nuxt/http',
   ],
+  
+  // Options
+oneSignal: {
+  init: {
+    appId: 'YOUR_APP_ID',
+    allowLocalhostAsSecureOrigin: true,
+    welcomeNotification: {
+        disable: true
+    }
+  }
+}
   /*
   ** Axios module configuration
   ** See https://axios.nuxtjs.org/options

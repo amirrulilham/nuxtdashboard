@@ -1,59 +1,19 @@
 <template>
   <div>
-    <v-container>
-      <div>
-        <v-alert
-          v-model="alert"
-          dismissible
-          color="cyan"
-          border="left"
-          elevation="2"
-          colored-border
-          icon="mdi-alert-circle"
-        >
-          You've got <strong>5</strong> new updates on your timeline!.
-        </v-alert>
-      </div>
+    <v-container class="mt-n6">
       <v-row justify="space-around">
         <template v-for="(item, index) in cards">
           <v-col cols="12" sm="5" lg="3" :key="index">
             <div>
               <v-hover v-slot:default="{ hover }">
-                <v-card :color="item.color" :elevation="hover ? 12 : 3" dark>
-                  <div class="d-flex flex-no-wrap justify-space-between">
-                    <div>
-                      <v-card-title
-                        class="headline black--text font-weight-bold"
-                        v-text="item.title"
-                      />
-
-                      <v-card-subtitle
-                        class="grey--text text--darken-1 py-0"
-                        v-text="item.subtitle"
-                      />
-                      <v-card-actions class="d-flex justify-center">
-                        <v-chip
-                          v-if="item.stat == 'increase'"
-                          color="success"
-                          small
-                        >
-                          (30 days)
-                          <v-icon small right>mdi-trending-up</v-icon>
-                        </v-chip>
-                        <v-chip
-                          v-if="item.stat == 'decrease'"
-                          color="warning"
-                          small
-                        >
-                          (30 days)
-                          <v-icon small right>mdi-trending-down</v-icon>
-                        </v-chip>
-                      </v-card-actions>
-                    </div>
-                    <v-avatar class="ma-3" size="125" tile>
-                      <v-img :src="item.src"></v-img>
-                    </v-avatar>
-                  </div>
+                <dashboardCard
+                  :color="item.color"
+                  :elevation="hover ? 12 : 3"
+                  :title="item.title"
+                  :subtitle="item.subtitle"
+                  :src="item.src"
+                  :stat="item.stat"
+                >
                   <v-speed-dial
                     v-model="fab[index]"
                     open-on-hover
@@ -76,7 +36,7 @@
                       <v-icon>mdi-delete</v-icon>
                     </v-btn>
                   </v-speed-dial>
-                </v-card>
+                </dashboardCard>
               </v-hover>
             </div>
           </v-col>
@@ -85,130 +45,76 @@
     </v-container>
     <v-row class="mt-2">
       <v-col cols="12">
-        <v-card flat>
-          <v-container>
-            <v-sheet elevation="5">
-              <v-tabs background-color="cyan" dark>
-                <v-tabs-slider color="yellow accent-3"></v-tabs-slider>
-                <v-tab class="ml-2">Sale</v-tab>
-              </v-tabs>
-            </v-sheet>
-            <v-row class="mt-2">
-              <v-col cols="12" lg="6">
-                <v-card class="card-border fill-height">
-                  <v-card-title>
-                    <span>Sales Trend</span>
-                    <v-spacer></v-spacer>
-                    <v-btn color="cyan" text small>
-                      2019
-                      <v-icon right>mdi-chevron-down</v-icon>
-                    </v-btn>
-                  </v-card-title>
-                  <v-card-text class="px-1 pt-1">
-                    <div>
-                      <LineChart
-                        :series="seriesLine"
-                        :options="LinechartOptions"
-                      />
-                    </div>
-                    <v-container class="py-0"
-                      ><v-divider></v-divider>
-                      <v-row>
-                        <v-col cols="12" lg="6">
-                          <div class="d-flex flex-column">
-                            <div><span class="subtitle-1 font-weight-medium">Target Sale : RM10000</span></div>
-                            <div class="mt-1">
-                              <v-progress-linear
-                                value="30"
-                                color="#5E35B1"
-                                height="5"
-                              ></v-progress-linear>
-                            </div>
-                          </div>
+        <mainCard tabtext="sale">
+          <v-row class="mt-2">
+            <v-col cols="12" lg="6">
+              <contentCard title="Sales Trend">
+                <v-btn color="cyan" slot="slot-filter" text small>
+                  2019
+                  <v-icon right>mdi-chevron-down</v-icon>
+                </v-btn>
+                <template slot="slot-content">
+                  <LineChart :series="seriesLine" :options="LinechartOptions" />
+                  <v-container class="py-0"
+                    ><v-divider></v-divider>
+                    <v-row>
+                      <template v-for="(item, index) in progressLine">
+                        <v-col cols="12" lg="6" :key="index">
+                          <progressLine
+                            :value="item.value"
+                            :color="item.color"
+                            height="5"
+                            :text="item.text"
+                          />
                         </v-col>
-                        <v-col cols="12" lg="6">
-                          <div class="d-flex flex-column">
-                            <div><span class="subtitle-1 font-weight-medium">Customer : 10K</span></div>
-                            <div class="mt-1">
-                              <v-progress-linear
-                                value="30"
-                                color="warning"
-                                height="5"
-                              ></v-progress-linear>
-                            </div>
-                          </div>
-                        </v-col>
-                        <v-col cols="12" lg="6">
-                          <div class="d-flex flex-column">
-                            <div><span class="subtitle-1 font-weight-medium">Retention : 75%</span></div>
-                            <div class="mt-1">
-                              <v-progress-linear
-                                value="30"
-                                color="error"
-                                height="5"
-                              ></v-progress-linear>
-                            </div>
-                          </div>
-                        </v-col>
-                        <v-col cols="12" lg="6">
-                          <div class="d-flex flex-column">
-                            <div><span class="subtitle-1 font-weight-medium">Duration : 1 Year</span></div>
-                            <div class="mt-1">
-                              <v-progress-linear
-                                value="30"
-                                color="success"
-                                height="5"
-                              ></v-progress-linear>
-                            </div>
-                          </div>
-                        </v-col>
-                      </v-row>
-                    </v-container>
-                  </v-card-text>
-                </v-card>
-              </v-col>
-              <v-col cols="12" lg="6">
-                <v-card class="card-border fill-height">
-                  <v-card-title>
-                    <span>Product Tracker</span>
-                    <v-spacer></v-spacer>
-                    <v-btn color="cyan" text small>
-                      Last 7 days
-                      <v-icon right>mdi-chevron-down</v-icon>
-                    </v-btn>
-                  </v-card-title>
-                  <v-card-text class="px-1 pt-1">
-                    <div>
-                      <apexchart
-                        height="350"
-                        type="donut"
-                        :options="chartOptions"
-                        :series="series"
-                      ></apexchart>
-                    </div>
-                  </v-card-text>
-                </v-card>
-              </v-col>
-            </v-row>
-          </v-container>
-        </v-card>
+                      </template>
+                    </v-row>
+                  </v-container>
+                </template>
+              </contentCard>
+            </v-col>
+            <v-col cols="12" lg="6">
+              <contentCard title="Product Tracker">
+                <v-btn color="cyan" slot="slot-filter" text small>
+                  Last 7 days
+                  <v-icon right>mdi-chevron-down</v-icon>
+                </v-btn>
+                <donutChart
+                  slot="slot-content"
+                  :options="DonutchartOptions"
+                  :series="seriesDonut"
+                />
+              </contentCard>
+            </v-col>
+          </v-row>
+        </mainCard>
       </v-col>
     </v-row>
   </div>
 </template>
 
 <script>
+import dashboardCard from "../components/dashboard-card";
+import contentCard from "../components/template/content-card";
+import mainCard from "../components/template/main-card";
 import LineChart from "../components/apexchart/basic-line";
+import DonutChart from "../components/apexchart/basic-donut";
 import FilterText from "../components/filter/filter-text";
+import Alert from "../components/alert";
+import progressLine from "../components/progress_line/progress-line";
 export default {
   components: {
+    dashboardCard,
+    contentCard,
+    mainCard,
     LineChart,
-    FilterText
+    DonutChart,
+    FilterText,
+    Alert,
+    progressLine
   },
   data() {
     return {
-      // alert !
-      alert: true,
       // fab control
       fab: [false],
       // cards
@@ -299,9 +205,31 @@ export default {
           ]
         }
       },
+      progressLine: [
+        {
+          value: "30",
+          color: "#5E35B1",
+          text: "Target Sale : RM10000"
+        },
+        {
+          value: "50",
+          color: "warning",
+          text: "Customer : 10K"
+        },
+        {
+          value: "60",
+          color: "error",
+          text: "Retention : 75%"
+        },
+        {
+          value: "15",
+          color: "success",
+          text: "Duration : 1 Year"
+        }
+      ],
       // ------- Donut
-      series: [44, 55, 41, 17, 15],
-      chartOptions: {
+      seriesDonut: [44, 55, 41, 17, 15],
+      DonutchartOptions: {
         chart: {
           type: "donut"
         },
@@ -379,8 +307,4 @@ export default {
 };
 </script>
 
-<style scoped>
-.card-border {
-  border-radius: 15px !important;
-}
-</style>
+<style></style>
