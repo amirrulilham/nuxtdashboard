@@ -17,7 +17,10 @@ export default {
         content: process.env.npm_package_description || ""
       }
     ],
-    link: [{ rel: "icon", type: "image/x-icon", href: "/favicon.ico" }]
+    link: [{ rel: "icon", type: "image/x-icon", href: "/favicon.ico" }],
+    script: [
+      {hid: 'onesignal', src: 'https://cdn.onesignal.com/sdks/OneSignalSDKWorker.js'}
+    ]
   },
   /*
    ** Customize the progress-bar color
