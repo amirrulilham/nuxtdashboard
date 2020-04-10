@@ -49,7 +49,7 @@ export default {
   // Options
   oneSignal: {
     init: {
-      appId: "YOUR_APP_ID",
+      appId: "a1667a97-2d95-4951-a2c1-01bfe9341ce9",
       allowLocalhostAsSecureOrigin: true,
       welcomeNotification: {
         disable: true
