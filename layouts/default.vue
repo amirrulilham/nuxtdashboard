@@ -215,6 +215,17 @@ export default {
   }, 
   created(){
     // this.$store.commit('alert/showAlert', `You've got <strong>5</strong> new updates on your timeline!`)
+  },
+  mounted(){
+    this.$OneSignal.push(() => {
+    this.$OneSignal.isPushNotificationsEnabled((isEnabled) => {
+    if (isEnabled) {
+      console.log('Push notifications are enabled!')
+    } else {
+      console.log('Push notifications are not enabled yet.')
+    }
+  })
+})
   }
 };
 </script>
